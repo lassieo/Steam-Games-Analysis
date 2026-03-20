@@ -8,8 +8,6 @@ The goal is to take a messy dataset, clean it, define a meaningful success metri
 
 ## Project Goal
 
-We wanted to answer a simple question:
-
 **What actually makes a Steam game successful?**
 
 Instead of guessing, we used data to define success in a way that reflects both:
