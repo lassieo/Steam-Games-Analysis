@@ -38,7 +38,7 @@ def main() -> None:
     definitions = {
         "option_1_simple": valid & (df["positive_ratio_calc"] >= 0.90),
         "option_2_balanced": valid
-        & (df["positive_ratio_calc"] >= 0.85)
+        & (df["positive_ratio_calc"] >= 0.80)
         & (df["review_total_calc"] >= 50),
         "option_3_relative": valid
         & (df["positive_ratio_calc"] >= ratio_p75)
@@ -101,10 +101,10 @@ Pseudo code:
 `success = 1 if positive_ratio_calc >= 0.90 else 0`
 
 ### Option 2 (Balanced)
-Plain English: A game is successful if at least 85% of its reviews are positive and it has at least 50 total reviews.
+Plain English: A game is successful if at least 80% of its reviews are positive and it has at least 50 total reviews.
 
 Pseudo code:
-`success = 1 if positive_ratio_calc >= 0.85 and review_total_calc >= 50 else 0`
+`success = 1 if positive_ratio_calc >= 0.80 and review_total_calc >= 50 else 0`
 
 ### Option 3 (Relative)
 Plain English: A game is successful if it is in the top 25% of reviewed games for both sentiment and review volume.
@@ -124,7 +124,7 @@ Selected definition: **Option 2 (Balanced)**
 
 Final formula:
 
-`success = 1 if positive_ratio_calc >= 0.85 and review_total_calc >= 50 else 0`
+`success = 1 if positive_ratio_calc >= 0.80 and review_total_calc >= 50 else 0`
 
 Why this works:
 
@@ -154,7 +154,7 @@ Class balance in the final output:
 
 ## Day 6-7 - Documentation Write-Up
 ### Final definition
-Success is defined as having at least 85% positive reviews and at least 50 total reviews, where total reviews are calculated as `positive + negative`.
+Success is defined as having at least 80% positive reviews and at least 50 total reviews, where total reviews are calculated as `positive + negative`.
 
 ### Reasoning
 This definition balances product quality and market traction. A high positive ratio alone is not enough, because very small games can reach 100% positive with only a handful of reviews. Adding a minimum review threshold makes the label more credible while preserving enough successful games for downstream analysis or modeling.
