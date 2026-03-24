@@ -1,0 +1,157 @@
+DATA DICTIONARY — cleaned_v1.csv
+
+--------------------------------------------------
+CORE IDENTIFIERS
+--------------------------------------------------
+appid
+Meaning: Unique identifier for each Steam game
+Type: string
+
+name
+Meaning: Name of the game
+Type: string
+
+snapshot
+Meaning: Dataset timestamp (e.g., 2024-05, 2025-03)
+Type: string
+
+--------------------------------------------------
+GAME INFORMATION
+--------------------------------------------------
+release_date
+Meaning: Official release date of the game
+Type: datetime
+
+required_age
+Meaning: Minimum age required to play
+Type: integer
+
+price
+Meaning: Price of the game (USD)
+Type: float
+
+dlc_count
+Meaning: Number of downloadable content (DLCs)
+Type: integer
+
+--------------------------------------------------
+PLATFORM AVAILABILITY
+--------------------------------------------------
+windows
+Meaning: Available on Windows
+Type: boolean
+
+mac
+Meaning: Available on Mac
+Type: boolean
+
+linux
+Meaning: Available on Linux
+Type: boolean
+
+--------------------------------------------------
+DEVELOPER & CONTENT METADATA
+--------------------------------------------------
+developers
+Meaning: Game developers
+Type: string
+
+publishers
+Meaning: Game publishers
+Type: string
+
+categories
+Meaning: Game categories (e.g., Single-player, Multiplayer)
+Type: string
+
+genres
+Meaning: Game genres (e.g., Action, RPG)
+Type: string
+
+tags
+Meaning: User-defined tags describing the game
+Type: string
+
+--------------------------------------------------
+ENGAGEMENT & POPULARITY METRICS
+--------------------------------------------------
+positive
+Meaning: Number of positive user ratings
+Type: integer
+
+negative
+Meaning: Number of negative user ratings
+Type: integer
+
+recommendations
+Meaning: Number of user recommendations
+Type: integer
+
+peak_ccu
+Meaning: Peak concurrent users
+Type: integer
+
+estimated_owners
+Meaning: Estimated number of owners (range string)
+Type: string
+
+--------------------------------------------------
+PLAYTIME METRICS
+--------------------------------------------------
+average_playtime_forever
+Meaning: Average total playtime (minutes)
+Type: integer
+
+average_playtime_2weeks
+Meaning: Average playtime in last 2 weeks
+Type: integer
+
+median_playtime_forever
+Meaning: Median total playtime
+Type: integer
+
+median_playtime_2weeks
+Meaning: Median playtime in last 2 weeks
+Type: integer
+
+--------------------------------------------------
+REVIEW METRICS
+--------------------------------------------------
+num_reviews_total
+Meaning: Total number of reviews
+Type: integer
+
+num_reviews_recent
+Meaning: Number of recent reviews
+Type: integer
+
+pct_pos_total
+Meaning: Percentage of positive reviews (all time)
+Type: integer
+
+pct_pos_recent
+Meaning: Percentage of positive reviews (recent)
+Type: integer
+
+user_score
+Meaning: Overall user score (0–100 scale)
+Type: integer
+
+--------------------------------------------------
+ADDITIONAL METRICS
+--------------------------------------------------
+achievements
+Meaning: Number of achievements available
+Type: integer
+
+discount
+Meaning: Current discount percentage
+Type: integer
+
+supported_languages
+Meaning: Supported languages
+Type: string
+
+full_audio_languages
+Meaning: Languages with full audio support
+Type: string
