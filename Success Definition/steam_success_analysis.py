@@ -3,10 +3,12 @@ from pathlib import Path
 import pandas as pd
 
 
-BASE_DIR = Path("/Users/laasyavenugopal/Desktop/Yelp JSON/yelp_dataset")
-SOURCE_FILE = Path("/Users/laasyavenugopal/Desktop/Steam Datasets/games_march2025_cleaned.csv")
-OUTPUT_CSV = BASE_DIR / "games_march2025_with_success.csv"
-OUTPUT_MD = BASE_DIR / "steam_success_report.md"
+REPO_ROOT = Path(__file__).resolve().parent.parent
+DATA_INPUT = REPO_ROOT / "data" / "input"
+DATA_OUTPUT = REPO_ROOT / "data" / "output"
+SOURCE_FILE = DATA_INPUT / "games_march2025_cleaned.csv"
+OUTPUT_CSV = DATA_OUTPUT / "games_march2025_with_success.csv"
+OUTPUT_MD = Path(__file__).resolve().parent / "steam_success_report.md"
 
 
 def format_pct(value: float) -> str:
@@ -63,6 +65,7 @@ def main() -> None:
 
     final_mask = definitions["option_2_balanced"]
     df["success"] = final_mask.astype(int)
+    DATA_OUTPUT.mkdir(parents=True, exist_ok=True)
     df.to_csv(OUTPUT_CSV, index=False)
 
     inconsistent_total = int((df["num_reviews_total"] != df["review_total_calc"]).sum())

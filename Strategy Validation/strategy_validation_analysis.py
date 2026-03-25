@@ -25,8 +25,9 @@ import pandas as pd
 # ---------------------------------------------------------------------------
 # Paths — update BASE_DIR to match your local layout
 # ---------------------------------------------------------------------------
-BASE_DIR = Path("/Users/pujithaattuluri/Desktop/Spring 2026/Applied ML/Group Project")
-SOURCE_FILE = BASE_DIR / "games_march2025_cleaned_binary_success.csv"
+REPO_ROOT = Path(__file__).resolve().parent.parent
+DATA_OUTPUT = REPO_ROOT / "data" / "output"
+SOURCE_FILE = DATA_OUTPUT / "games_march2025_with_success.csv"
 OUTPUT_REPORT = Path(__file__).resolve().parent / "strategy_validation_report.md"
 OUTPUT_AUDIT = Path(__file__).resolve().parent / "feature_audit.csv"
 
