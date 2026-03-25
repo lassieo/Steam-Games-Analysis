@@ -3,7 +3,7 @@
 ## Dataset summary
 - Total games: 89,618
 - Successful: 14,617 (16.3%) | Unsuccessful: 75,001 (83.7%)
-- Model features: 68 | EDA reference: 9
+- Model features: 72 | EDA reference: 9
 - Class imbalance ratio: 5.1:1
 
 ## Charts produced
@@ -31,7 +31,7 @@ Only 16.3% of games are successful. The imbalance ratio is 5.1:1.
 | Feature | Skewness | Needs log transform? |
 |---|---:|---|
 | achievements | 28.46 | Yes — use log1p |
-| price | 20.72 | Yes — use log1p |
+| price | 8.78 | Yes — use log1p |
 | audio_language_count | 8.70 | Yes — use log1p |
 | developer_game_count | 8.03 | Yes — use log1p |
 | language_count | 6.26 | Yes — use log1p |
@@ -50,7 +50,7 @@ Only 16.3% of games are successful. The imbalance ratio is 5.1:1.
 | Tag Count | 10.30 | 16.16 | 0.769 | Strong |
 | Has Website | 0.42 | 0.64 | 0.435 | Strong |
 | Platform Count | 1.29 | 1.54 | 0.385 | Strong |
-| Price | 6.59 | 10.98 | 0.331 | Strong |
+| Price | 6.56 | 10.97 | 0.373 | Strong |
 | Description Length | 193.75 | 205.55 | 0.152 | Moderate |
 | Achievements | 18.06 | 33.33 | 0.093 | Weak |
 | Genre Count | 2.90 | 2.77 | 0.092 | Weak |
@@ -78,7 +78,7 @@ Only 16.3% of games are successful. The imbalance ratio is 5.1:1.
 | developer_game_count | 16,592 | 18.5% | 8.0 | balanced | log1p |
 | language_count | 13,281 | 14.8% | 6.3 | successful | log1p |
 | achievements | 5,636 | 6.3% | 28.5 | successful | log1p |
-| price | 4,146 | 4.6% | 20.7 | successful | log1p |
+| price | 4,146 | 4.6% | 8.8 | successful | log1p |
 | description_length | 0 | 0.0% | -0.4 | balanced | none |
 
 **Signal bias** indicates whether outliers are disproportionately in one class. If biased toward "successful," removing outliers would destroy predictive signal. Capping preserves the direction while limiting magnitude.
@@ -124,7 +124,7 @@ Early years avg success rate: 36.7%, Late years: 14.5%, Drift: -22.2%
 | Games with 0 categories | 876 |
 | Games with 0 tags | 16,872 |
 | Games with platform_count=0 | 0 |
-| Games with price > $200 | 8 |
+| Games with price > $200 | 0 |
 | Games with 0 achievements | 41,090 |
 | Games with no release date | 0 |
 | Games with description_length=0 | 120 |
@@ -159,17 +159,41 @@ Early years avg success rate: 36.7%, Late years: 14.5%, Drift: -22.2%
 |---|---|---|
 | Drop `years_since_release` (redundant with `release_year`, corr=-1.0) | Yes | Redundancy is always wrong, regardless of model type |
 | Fill NaN values in numeric features with median | Yes | All models need complete data |
+| Add `has_tags` flag (18.8% of games have 0 tags) | Yes | Lets models distinguish "no tag data" from "tags present but not matching top 20" |
+| Add `has_achievements` flag (45.8% of games have 0) | Yes | Lets models separate "no achievements" signal from "how many achievements" |
+| Add `has_genres`, `has_categories` flags | Yes | Same pattern for sparse categorical coverage |
+| Cap price at $200 (8 extreme outliers) | Yes | These are joke/asset-flip listings, not real games. Safe for all models. |
 | Log-transform skewed features (achievements, developer_game_count) | No — deferred | Tree models perform worse with log transforms. Applied per-model in training. |
 | Cap outliers at 99th percentile | No — deferred | Only needed for MLP. Trees are robust to outliers. |
 | StandardScaler normalization | No — deferred | Only needed for MLP. Trees are invariant to scaling. |
 | Drop low-separability features (tag_count, description_length) | No — deferred | Let SHAP confirm after training rather than pre-judging. |
 
 ## Issues and challenges
-1. Class imbalance (16.3% positive) is the dominant challenge.
-2. Sentiment-based success metric does not capture commercial revenue directly.
-3. Survivorship bias — delisted games are absent.
-4. Review bombing affects competitive multiplayer games disproportionately.
-5. Feature sparsity in one-hot genre/tag columns for rare categories.
+
+### 1. Class imbalance (16.3% positive class)
+Only about 1 in 6 games meets our success threshold. If a model simply predicted "not successful" for every game, it would achieve ~84% accuracy while being completely useless. This is the most significant technical challenge in the project because it affects every model we train.
+
+**How we address it:** We use `class_weight='balanced'` in tree-based models, which penalizes misclassifying the minority class more heavily. We evaluate SMOTE oversampling on training folds only (never on validation data, which would leak synthetic information). Most importantly, we use ROC-AUC as our primary metric instead of accuracy, because ROC-AUC measures how well the model ranks games regardless of the class distribution.
+
+### 2. Success metric captures sentiment, not revenue
+Our definition of success is based on review sentiment (80% positive ratio with at least 50 reviews). This means a game can be commercially profitable but labeled "unsuccessful" if it has polarized reviews — for example, PUBG has over 50 million estimated owners but only 59% positive reviews due to its competitive community. Conversely, a niche indie game with 60 reviews that are 95% positive is labeled "successful" despite minimal commercial impact.
+
+**How we address it:** We validate our sentiment-based label against commercial metrics (estimated owners, peak concurrent users) in the EDA using `eda_` prefixed columns. The correlation analysis shows whether our label aligns with commercial outcomes. We document this as a known scope limitation: our model predicts community reception, which is one meaningful dimension of success but not the only one.
+
+### 3. Survivorship bias
+The dataset only contains games currently listed on Steam. Games that were delisted, removed, or shut down — which are disproportionately failures — are absent. This means our dataset underrepresents the "unsuccessful" category in ways we cannot measure, and our model may overestimate success rates for the broader population of games.
+
+**How we address it:** This is an inherent limitation of the data source that cannot be fixed without access to historical Steam records. We document it transparently and note that model predictions apply to "games that remain on Steam" rather than all games ever released.
+
+### 4. Review bombing
+Competitive multiplayer games (PUBG, Helldivers 2, Destiny 2) and games involved in controversies receive coordinated negative review campaigns that depress their positive ratio independently of game quality. These campaigns can shift a game from "successful" to "unsuccessful" under our metric based on community politics rather than the game itself.
+
+**How we address it:** We do not filter or adjust for review bombing because any detection method would introduce subjective judgment about which negative reviews are "legitimate." Instead, we acknowledge that our model learns from community sentiment as-is, including its distortions. The `pct_pos_recent` field (available in the raw data but excluded from modeling) could be used in future work to detect sentiment shifts.
+
+### 5. Feature sparsity in one-hot encoded columns
+Our top-15 genre, top-12 category, and top-20 tag binary features cover the majority of games, but rare combinations create sparse rows where most binary columns are zero. Games with 0 tags (16,872 games, 18.8%) have all 20 tag columns set to zero, which is indistinguishable from "has tags but none match our top 20" without the `has_tags` flag we added.
+
+**How we address it:** We added `has_tags`, `has_achievements`, `has_genres`, and `has_categories` binary flags to let models distinguish between "data not present" and "data present but not matching encoded categories." For the MLP, sparse binary features may add noise — we will monitor SHAP importance and consider dropping low-signal one-hot columns if they hurt performance.
 
 ## Tasks remaining
 1. Model training: RF → XGBoost/LightGBM → MLP → Stacking Ensemble
