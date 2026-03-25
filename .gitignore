@@ -1,0 +1,10 @@
+# Data files too large for GitHub (download from Google Drive — see README)
+data/input/*.csv
+data/output/*.csv
+
+# Python
+__pycache__/
+*.pyc
+
+# OS files
+.DS_Store

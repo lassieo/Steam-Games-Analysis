@@ -1,6 +1,8 @@
 # Strategy & Validation Report
 ## Steam Games Success Prediction — Dataset Review & Feature Strategy
 
+**Author:** Pujitha Attuluri
+**Role:** Strategy & Validation Lead
 **Dataset:** `games_march2025_cleaned_binary_success.csv` (89,618 games, 51 columns)
 
 ---

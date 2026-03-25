@@ -40,9 +40,10 @@ import seaborn as sns
 # ---------------------------------------------------------------------------
 # Paths
 # ---------------------------------------------------------------------------
-BASE_DIR = Path("/Users/pujithaattuluri/Desktop/Spring 2026/Applied ML/Group Project")
-SOURCE_FILE = BASE_DIR / "games_march2025_cleaned_binary_success.csv"
-OUTPUT_CSV = BASE_DIR / "steam_features_engineered.csv"
+REPO_ROOT = Path(__file__).resolve().parent.parent
+DATA_OUTPUT = REPO_ROOT / "data" / "output"
+SOURCE_FILE = DATA_OUTPUT / "games_march2025_with_success.csv"
+OUTPUT_CSV = DATA_OUTPUT / "steam_features_engineered.csv"
 CHARTS_DIR = Path(__file__).resolve().parent / "charts"
 OUTPUT_REPORT = Path(__file__).resolve().parent / "eda_insights_report.md"
 
