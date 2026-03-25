@@ -27,9 +27,10 @@ In code:
 
 ```python
 success = 1 if positive_ratio_calc >= 0.80 and review_total_calc >= 50 else 0
-
+```
 
 ---
+
 
 ## Setup — Getting the Data
 
