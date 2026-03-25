@@ -1,0 +1,52 @@
+column,dtype,null_count,null_pct,unique_values,classification,reason,sample_value
+appid,int64,0,0.0,89618,EXCLUDED,Row identifier — not a feature,730
+name,object,0,0.0,88899,EXCLUDED,Row identifier — not a feature,Counter-Strike 2
+release_date,object,0,0.0,4459,MODEL_FEATURE,"Decomposed into release_year, release_month, release_quarter, release_day_of_week, released_in_sale_month flag, and years_since_release.",2012-08-21
+required_age,int64,0,0.0,16,MODEL_FEATURE,Age rating signal that affects audience reach. Used directly as a numeric feature.,0
+price,float64,0,0.0,616,MODEL_FEATURE,Core business decision. Used directly and also converted into is_free flag and price_tier bins.,0.0
+dlc_count,int64,0,0.0,102,EDA_REFERENCE,Post-launch content strategy decision,1
+detailed_description,object,197,0.2,89075,EXCLUDED,Full HTML text — not used without NLP (deferred),"For over two decades, Counter-Strike has offered an elite competitive experience"
+about_the_game,object,220,0.2,89040,EXCLUDED,Duplicate of detailed_description,"For over two decades, Counter-Strike has offered an elite competitive experience"
+short_description,object,120,0.1,88586,MODEL_FEATURE,"Text length measured as description_length, a proxy for marketing effort.","For over two decades, Counter-Strike has offered an elite competitive experience"
+reviews,object,79217,88.4,10291,EXCLUDED,"Press review quotes — 60% null, unstructured",“A modern multiplayer masterpiece.” 9.5/10 – Destructoid “Once you start to lear
+header_image,object,0,0.0,89587,EXCLUDED,URL — not a feature without image analysis,https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/730/header.jp
+website,object,48504,54.1,33321,MODEL_FEATURE,Converted to has_website binary flag indicating whether a dedicated game website exists.,http://counter-strike.net/
+support_url,object,45508,50.8,29309,EXCLUDED,20% null — low signal,https://support.pubg.com/hc/en-us
+support_email,object,10820,12.1,48174,EXCLUDED,70% null — too sparse,support@terraria.org
+windows,bool,0,0.0,2,MODEL_FEATURE,Platform support flag. Combined with mac and linux into a single platform_count feature.,True
+mac,bool,0,0.0,2,MODEL_FEATURE,Platform support flag. Combined with windows and linux into a single platform_count feature.,False
+linux,bool,0,0.0,2,MODEL_FEATURE,Platform support flag. Combined with windows and mac into a single platform_count feature.,True
+metacritic_score,int64,0,0.0,69,EDA_REFERENCE,Available days/weeks after launch — borderline but excluded for clean boundary,0
+metacritic_url,object,86071,96.0,3507,EXCLUDED,URL — not a feature,https://www.metacritic.com/game/pc/dota-2?ftag=MCD-06-10aaa1f
+achievements,int64,0,0.0,433,MODEL_FEATURE,Proxy for content depth and polish. Used directly as a numeric feature.,1
+recommendations,int64,0,0.0,4640,EXCLUDED,Engagement metric correlated with target — target leakage,4401572
+notes,object,72975,81.4,13946,EXCLUDED,"65% null — content warnings, low signal",Includes intense violence and blood.
+supported_languages,object,0,0.0,14560,MODEL_FEATURE,"Counted to get language_count, which reflects localization investment level.","['Czech', 'Danish', 'Dutch', 'English', 'Finnish', 'French', 'German', 'Hungaria"
+full_audio_languages,object,0,0.0,2882,MODEL_FEATURE,"Counted to get audio_language_count, a stronger signal of localization investment than text-only.","['English', 'Indonesian']"
+packages,object,0,0.0,75740,EXCLUDED,"Pricing structure JSON — complex, low marginal value","[{'title': 'Buy Counter-Strike 2', 'description': '', 'subs': [{'text': 'Counter"
+developers,object,0,0.0,56478,MODEL_FEATURE,Studio name used to compute developer_historical_success (past success rate) and developer_game_count (experience). Both computed using only prior games to avoid leakage.,['Valve']
+publishers,object,0,0.0,49798,MODEL_FEATURE,Publisher name used to compute publisher_historical_success using only prior games.,['Valve']
+categories,object,0,0.0,7471,MODEL_FEATURE,"Platform capabilities like multiplayer, co-op, and workshop support. One-hot encoded into the top 12.","['Multi-player', 'Cross-Platform Multiplayer', 'Steam Trading Cards', 'Steam Wor"
+genres,object,0,0.0,2689,MODEL_FEATURE,Primary discovery signal on Steam. One-hot encoded into the top 15 most common genres.,"['Action', 'Free To Play']"
+screenshots,object,0,0.0,89482,EXCLUDED,URL list — not a feature without image analysis,['https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/730/ss_7966
+movies,object,0,0.0,87183,EXCLUDED,URL list — not a feature without video analysis,['http://video.akamai.steamstatic.com/store_trailers/256972298/movie_max.mp4?t=1
+user_score,int64,0,0.0,30,EXCLUDED,All zeros in dataset — no signal,0
+score_rank,float64,89579,100.0,3,EXCLUDED,100% null — no data,98.0
+positive,int64,0,0.0,5087,EXCLUDED,Direct component of success formula — target leakage,7480813
+negative,int64,0,0.0,2525,EXCLUDED,Direct component of success formula — target leakage,1135108
+estimated_owners,object,0,0.0,15,EDA_REFERENCE,Post-launch outcome — would cause temporal leakage,100000000 - 200000000
+average_playtime_forever,int64,0,0.0,1851,EDA_REFERENCE,Post-launch engagement — only observable after purchase,33189
+average_playtime_2weeks,int64,0,0.0,417,EDA_REFERENCE,Post-launch recent engagement,879
+median_playtime_forever,int64,0,0.0,1639,EDA_REFERENCE,Post-launch engagement (median),5174
+median_playtime_2weeks,int64,0,0.0,420,EDA_REFERENCE,Post-launch recent engagement (median),350
+discount,int64,0,0.0,86,EDA_REFERENCE,Post-launch pricing action,0
+peak_ccu,int64,0,0.0,1180,EDA_REFERENCE,Post-launch popularity metric,1212356
+tags,object,0,0.0,70420,MODEL_FEATURE,Community-assigned descriptors more granular than genres. Top 20 tags encoded as binary features.,"{'FPS': 90857, 'Shooter': 65397, 'Multiplayer': 62332, 'Competitive': 53359, 'Ac"
+pct_pos_total,int64,0,0.0,102,EXCLUDED,Derived from positive/negative — target leakage,86
+num_reviews_total,int64,0,0.0,5346,EXCLUDED,Inconsistent with positive+negative — also target leakage,8632939
+pct_pos_recent,int64,0,0.0,95,EXCLUDED,Derived from review counts — target leakage,82
+num_reviews_recent,int64,0,0.0,830,EXCLUDED,Recent review count — target leakage,96473
+review_total_calc,int64,0,0.0,5499,EXCLUDED,Engineered in Step 1 to compute target — target leakage,8615921
+positive_ratio_calc,float64,17055,19.0,16220,EXCLUDED,Engineered in Step 1 to compute target — target leakage,0.8682545951848909
+has_reviews_calc,bool,0,0.0,2,EXCLUDED,Boolean from review count — target leakage,True
+success,int64,0,0.0,2,EXCLUDED,TARGET VARIABLE — not a feature,1
