@@ -1,96 +1,48 @@
-import pandas as pd
-
-# =========================
-# 1. LOAD DATA
-# =========================
-games_2025 = pd.read_csv("dataset2/games_march2025_cleaned.csv")
-reviews_2025 = pd.read_csv("reviews/march2025_steam_reviews.csv")
-
-games_2024 = pd.read_csv("dataset2/games_may2024_cleaned.csv")
-reviews_2024 = pd.read_csv("reviews/may2024_steam_reviews.csv")
-
-# =========================
-# 2. STANDARDIZE COLUMNS
-# =========================
-def clean_columns(df):
-    df.columns = (
-        df.columns
-        .str.strip()
-        .str.lower()
-    )
-    return df
-
-games_2025 = clean_columns(games_2025)
-reviews_2025 = clean_columns(reviews_2025)
-
-games_2024 = clean_columns(games_2024)
-reviews_2024 = clean_columns(reviews_2024)
-
-# =========================
-# 3. FIX KEY COLUMN
-# =========================
-# Some datasets use AppID instead of appid
-
-games_2024.columns = games_2024.columns.str.lower()
-reviews_2024.columns = reviews_2024.columns.str.lower()
-
-# Ensure string type
-for df in [games_2025, reviews_2025, games_2024, reviews_2024]:
-    df["appid"] = df["appid"].astype(str)
-
-# =========================
-# 4. CHECK OVERLAP
-# =========================
-def check_overlap(games, reviews, label):
-    overlap = set(games["appid"]) & set(reviews["appid"])
-    print(f"{label} overlap:", len(overlap))
-
-check_overlap(games_2025, reviews_2025, "2025")
-check_overlap(games_2024, reviews_2024, "2024")
-
-# =========================
-# 5. MERGE (CORRECT JOIN)
-# =========================
-# LEFT JOIN = keep all games
-
-merged_2025 = games_2025.merge(
-    reviews_2025,
-    on="appid",
-    how="left"
-)
-
-merged_2024 = games_2024.merge(
-    reviews_2024,
-    on="appid",
-    how="left"
-)
-
-# =========================
-# 6. ADD SNAPSHOT LABEL
-# =========================
-merged_2025["snapshot"] = "2025-03"
-merged_2024["snapshot"] = "2024-05"
-
-# =========================
-# 7. CHECK DUPLICATES
-# =========================
-print("2025 duplicates:", merged_2025.duplicated(subset=["appid"]).sum())
-print("2024 duplicates:", merged_2024.duplicated(subset=["appid"]).sum())
-
-# =========================
-# 8. COMBINE DATASETS
-# =========================
-merged_all = pd.concat([merged_2024, merged_2025], ignore_index=True)
-
-# =========================
-# 9. FINAL CHECK
-# =========================
-print("\nFinal shape:", merged_all.shape)
-print("Missing values:\n", merged_all.isnull().sum().head())
-
-# =========================
-# 10. SAVE OUTPUT
-# =========================
-merged_all.to_csv("merged_raw.csv", index=False)
-
-print("\n✅ merged_raw.csv saved successfully!")
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "metadata": {},
+   "outputs": [
+    {
+     "ename": "NameError",
+     "evalue": "name 'march25' is not defined",
+     "output_type": "error",
+     "traceback": [
+      "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m",
+      "\u001b[0;31mNameError\u001b[0m                                 Traceback (most recent call last)",
+      "\u001b[1;32m/Users/lushenasada/Documents/GitHub/Steam-Games-Analysis/04merge.ipynb Cell 1\u001b[0m line \u001b[0;36m1\n\u001b[0;32m----> <a href='vscode-notebook-cell:/Users/lushenasada/Documents/GitHub/Steam-Games-Analysis/04merge.ipynb#W0sZmlsZQ%3D%3D?line=0'>1</a>\u001b[0m merged \u001b[39m=\u001b[39m march25\u001b[39m.\u001b[39mcopy()\n\u001b[1;32m      <a href='vscode-notebook-cell:/Users/lushenasada/Documents/GitHub/Steam-Games-Analysis/04merge.ipynb#W0sZmlsZQ%3D%3D?line=1'>2</a>\u001b[0m merged\u001b[39m.\u001b[39mto_csv(\u001b[39m\"\u001b[39m\u001b[39mmerged_raw.csv\u001b[39m\u001b[39m\"\u001b[39m, index\u001b[39m=\u001b[39m\u001b[39mFalse\u001b[39;00m)\n",
+      "\u001b[0;31mNameError\u001b[0m: name 'march25' is not defined"
+     ]
+    }
+   ],
+   "source": [
+    "merged = march25.copy()\n",
+    "merged.to_csv(\"merged_raw.csv\", index=False)"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.12.1"
+  },
+  "orig_nbformat": 4
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
+}
