@@ -1,0 +1,101 @@
+FEATURE SET
+
+Target (1 features):
+  - success
+
+Identifiers (2 features):
+  - appid
+  - name
+
+Pricing (4 features):
+  - price
+  - is_free
+  - price_tier
+  - genre_free_to_play
+
+Temporal (5 features):
+  - release_year
+  - release_month
+  - release_day_of_week
+  - release_quarter
+  - released_in_sale_month
+
+Platform / Language (3 features):
+  - platform_count
+  - language_count
+  - audio_language_count
+
+Engagement (2 features):
+  - achievements
+  - has_achievements
+
+Developer / Publisher (3 features):
+  - developer_historical_success
+  - publisher_historical_success
+  - developer_game_count
+
+Categories (cat_) (12 features):
+  - cat_co_op
+  - cat_family_sharing
+  - cat_full_controller_support
+  - cat_multi_player
+  - cat_online_pvp
+  - cat_partial_controller_support
+  - cat_pvp
+  - cat_single_player
+  - cat_steam_achievements
+  - cat_steam_cloud
+  - cat_steam_leaderboards
+  - cat_steam_trading_cards
+
+Genres (genre_) (15 features):
+  - genre_count
+  - genre_action
+  - genre_adventure
+  - genre_casual
+  - genre_design_&_illustration
+  - genre_early_access
+  - genre_indie
+  - genre_massively_multiplayer
+  - genre_racing
+  - genre_rpg
+  - genre_simulation
+  - genre_sports
+  - genre_strategy
+  - genre_utilities
+  - genre_violent
+
+Tags (tag_) (21 features):
+  - tag_count
+  - tag_2d
+  - tag_3d
+  - tag_action
+  - tag_adventure
+  - tag_atmospheric
+  - tag_casual
+  - tag_colorful
+  - tag_cute
+  - tag_exploration
+  - tag_first_person
+  - tag_indie
+  - tag_multiplayer
+  - tag_pixel_graphics
+  - tag_puzzle
+  - tag_rpg
+  - tag_shooter
+  - tag_simulation
+  - tag_singleplayer
+  - tag_story_rich
+  - tag_strategy
+
+EDA Features (eda_) (9 features):
+  - eda_avg_playtime
+  - eda_dlc_count
+  - eda_has_metacritic
+  - eda_log_owners
+  - eda_log_peak_ccu
+  - eda_median_playtime
+  - eda_metacritic_score
+  - eda_owners_midpoint
+  - eda_peak_ccu
+

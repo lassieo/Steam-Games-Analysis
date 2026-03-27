@@ -1,0 +1,39 @@
+Dataset Description
+
+The dataset contains structured information on Steam games, with each row representing a unique game. The data includes a combination of original attributes and engineered features designed to support predictive modeling of game success.
+
+The dataset consists of 89,618 observations and 84 features. The target variable, "success", is a binary indicator representing whether a game is considered successful. The dataset is clean, with no missing values or duplicate entries, making it suitable for machine learning tasks.
+
+Features are organized into several categories:
+
+1. Identifiers:
+Each game is uniquely identified by an appid and includes a name for reference. These fields are not used directly in modeling but provide context.
+
+2. Pricing Features:
+These include price, is_free, and price_tier, which describe the cost structure of the game. These features help analyze how pricing strategies relate to game success.
+
+3. Temporal Features:
+Release-related variables such as release_year, release_month, release_day_of_week, and release_quarter capture when a game was launched. Additional features like released_in_sale_month provide insight into seasonal effects.
+
+4. Platform and Language Features:
+These features, including platform_count, language_count, and audio_language_count, describe accessibility and availability across platforms and languages.
+
+5. Engagement Features:
+Features such as achievements and has_achievements measure the level of in-game content and user engagement potential.
+
+6. Developer and Publisher Features:
+Historical performance metrics, including developer_historical_success and publisher_historical_success, capture prior success trends. developer_game_count reflects developer experience.
+
+7. Category Features:
+Binary encoded features (cat_*) represent gameplay categories such as multiplayer, co-op, and controller support.
+
+8. Genre Features:
+One-hot encoded genre variables (genre_*) represent the type of game, such as action, RPG, simulation, and strategy. genre_count captures the number of genres associated with each game.
+
+9. Tag Features:
+User-defined tags (tag_*) provide more granular descriptions of gameplay and style, such as "story-rich", "multiplayer", and "pixel graphics". tag_count summarizes the number of tags per game.
+
+10. EDA-Derived Features:
+Additional features (eda_*) were engineered from exploratory data analysis, including log-transformed variables (eda_log_owners, eda_log_peak_ccu), playtime statistics, and metacritic-related indicators. These features capture underlying patterns and improve model performance.
+
+Overall, the dataset combines raw attributes with engineered features to provide a comprehensive representation of each game. It is fully cleaned, normalized, and ready for predictive modeling and analysis.
