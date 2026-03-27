@@ -33,7 +33,7 @@ Evidence from the existing price-tier EDA:
 | Group | Games | Success rate |
 |---|---:|---:|
 | Free | 14,160 | 11.12% |
-| Paid | 75,458 | 17.06% |
+| Paid | 75,458 | 17.28% |
 
 Interpretation:
 
@@ -48,12 +48,10 @@ Evidence from the grouped EDA:
 | Price tier | Games | Success rate |
 |---|---:|---:|
 | Free | 14,160 | 11.12% |
-| 0.01-4.99 | 39,388 | 10.52% |
-| 5.00-9.99 | 19,090 | 17.87% |
-| 10.00-19.99 | 12,731 | 31.11% |
-| 20.00-29.99 | 2,558 | 36.75% |
-| 30.00-59.99 | 1,383 | 40.27% |
-| 60+ | 308 | 9.74% |
+| Budget (<$15) | 66,147 | 14.64% |
+| Mid ($15-$50) | 8,731 | 36.81% |
+| Premium ($50-$85) | 361 | 38.23% |
+| AAA ($85+) | 219 | 2.28% |
 
 Additional supporting detail:
 
@@ -62,7 +60,7 @@ Additional supporting detail:
 Interpretation:
 
 - The weak raw correlation and the much clearer tier pattern suggest that price bands are more informative than a simple linear price effect.
-- Mid-priced games perform best, while the cheapest and most expensive groups perform worse.
+- Mid and premium games perform best, while free and AAA-priced games perform worse.
 
 ### Hypothesis 3: Developer track record predicts success
 Result: **Supported by the EDA insights report.**
@@ -107,12 +105,12 @@ Interpretation:
 ## Models To Build For Each Hypothesis
 
 ### Hypothesis 1 model
-Use a **logistic regression** model with `is_free` as the main predictor and a few control variables. This is the simplest and cleanest baseline for testing whether the free-vs-paid difference remains meaningful.
-This model fits well because the hypothesis is a straightforward yes/no comparison, and logistic regression is easy to explain and interpret.
+Use **Random Forest** as the baseline model with `is_free` and supporting metadata included. This keeps the hypothesis aligned with the agreed project pipeline, where Random Forest is the first real benchmark.
+This model fits well because it tests the free-versus-paid distinction without dropping below the agreed baseline complexity for the project.
 
 ### Hypothesis 2 model
-Use a **decision tree** with engineered price tiers. This is a good fit because the EDA suggests threshold behavior rather than a smooth linear price effect.
-This model fits well because a decision tree can naturally split games into price ranges and show where success rates change the most.
+No separate standalone model is needed for this hypothesis. The price-tier result is already validated in EDA, and `price_tier` should be carried into the main **Random Forest**, **XGBoost/LightGBM**, and **MLP** pipeline as an engineered feature.
+This fits well because the tier structure is already visible in the tables, so the goal is to preserve it inside the main models rather than benchmark a weaker standalone tree.
 
 ### Hypothesis 3 model
 Use **LightGBM** with developer-history features included. Since developer track record shows the strongest class separation, boosting is a strong fit for capturing its importance and interaction effects.
@@ -126,10 +124,9 @@ This model fits well because genre is a multi-label feature, and tree-based mode
 For the final project, the strongest modeling sequence from the EDA report is:
 
 1. Random Forest baseline
-2. Logistic Regression baseline
-3. XGBoost or LightGBM
-4. Tabular MLP with log-transformed skewed features
-5. Stacking ensemble
+2. XGBoost or LightGBM
+3. Tabular MLP with log-transformed skewed features
+4. Stacking ensemble
 
 ## Findings And Pattern Interpretation
 
@@ -146,4 +143,4 @@ Developer track record appears to be one of the strongest predictors available i
 Genre remains an important explanatory factor, but it should be treated as an overlapping multi-label signal rather than a single-category variable.
 
 ### Overall conclusion
-These four hypotheses align better with the EDA insights report and support stronger downstream models than the earlier leakage-prone hypotheses.
+These four hypotheses align better with the EDA insights report and support a stronger modeling pipeline built around Random Forest, boosting, MLP, and stacking rather than weaker standalone baselines.

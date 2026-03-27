@@ -32,7 +32,7 @@ Using the existing price-based EDA:
 | Group | Games | Success rate |
 |---|---:|---:|
 | Free | 14,160 | 11.12% |
-| Paid | 75,458 | 17.06% |
+| Paid | 75,458 | 17.28% |
 
 Interpretation:
 
@@ -45,12 +45,10 @@ This hypothesis is **supported**.
 | Price tier | Games | Success rate |
 |---|---:|---:|
 | Free | 14,160 | 11.12% |
-| 0.01-4.99 | 39,388 | 10.52% |
-| 5.00-9.99 | 19,090 | 17.87% |
-| 10.00-19.99 | 12,731 | 31.11% |
-| 20.00-29.99 | 2,558 | 36.75% |
-| 30.00-59.99 | 1,383 | 40.27% |
-| 60+ | 308 | 9.74% |
+| Budget (<$15) | 66,147 | 14.64% |
+| Mid ($15-$50) | 8,731 | 36.81% |
+| Premium ($50-$85) | 361 | 38.23% |
+| AAA ($85+) | 219 | 2.28% |
 
 Supporting detail:
 
@@ -59,7 +57,7 @@ Supporting detail:
 Interpretation:
 
 - The tier breakdown is more informative than the raw price correlation.
-- Mid-priced games perform better than both low-priced games and the very high-price outlier group.
+- Mid and premium games perform better than both low-priced games and the AAA-priced outlier group.
 - This supports the EDA report’s suggestion that price tier is more useful than raw price alone.
 
 ### Hypothesis 3: Developer track record predicts success
@@ -149,12 +147,12 @@ Integrate the EDA charts and model comparison visuals into the final submission.
 ## Suggested Models For Each Hypothesis
 
 ### Hypothesis 1 model
-Use **logistic regression** with a binary `is_free` feature and a few supporting predictors. This gives the project one simple, interpretable baseline model.
-It fits this hypothesis well because the free-versus-paid question is a simple binary comparison that does not need a highly complex model to start with.
+Use **Random Forest** with a binary `is_free` feature and supporting predictors. This keeps the hypothesis aligned with the agreed baseline from the strategy report.
+It fits this hypothesis well because Random Forest is our approved baseline and still gives a clear test of whether the free-versus-paid difference matters.
 
 ### Hypothesis 2 model
-Use a **decision tree** with engineered price tiers. This matches the threshold-style pattern seen in the EDA better than a simple straight-line model.
-It fits this hypothesis well because the price relationship changes across ranges, and a decision tree can show those cutoffs clearly.
+No separate standalone model is needed for this hypothesis. The price-tier pattern is already validated in EDA, and `price_tier` should be used as an engineered feature inside the main **Random Forest**, **XGBoost/LightGBM**, and **MLP** pipeline.
+It fits this hypothesis well because the key value of price tiers is feature engineering, not benchmarking a weaker standalone tree after Random Forest.
 
 ### Hypothesis 3 model
 Use **LightGBM** with developer-history variables, since the EDA report shows very strong separation for this feature group.
@@ -169,10 +167,9 @@ It fits this hypothesis well because games often belong to more than one genre, 
 The most suitable progression from the EDA report is:
 
 1. Random Forest baseline
-2. Logistic Regression baseline
-3. XGBoost or LightGBM
-4. Tabular MLP with log-transformed skewed features
-5. Stacking ensemble
+2. XGBoost or LightGBM
+3. Tabular MLP with log-transformed skewed features
+4. Stacking ensemble
 
 This gives the project both interpretable baselines and stronger non-linear models.
 
@@ -180,4 +177,4 @@ This gives the project both interpretable baselines and stronger non-linear mode
 
 The revised Week 2 analysis supports four cleaner hypotheses that align with the EDA report and the actual modeling plan. Paid vs free structure, price tiers, developer track record, and genre all provide clearer and more defensible directions for the final report than leakage-prone post-launch metrics.
 
-Overall, the project is now set up to connect EDA, hypothesis testing, and advanced modeling into one consistent final narrative.
+Overall, the project is now set up to connect EDA, hypothesis testing, and advanced modeling into one consistent final narrative built around Random Forest, boosting models, MLP, and stacking.
