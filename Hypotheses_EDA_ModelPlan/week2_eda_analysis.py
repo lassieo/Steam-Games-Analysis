@@ -3,7 +3,7 @@ from pathlib import Path
 import pandas as pd
 
 
-BASE_DIR = Path("/Users/laasyavenugopal/Desktop/Steam Datasets/Week2_Steam")
+BASE_DIR = Path("/Users/laasyavenugopal/Documents/GitHub/Steam-Games-Analysis/Hypotheses_EDA_ModelPlan")
 SOURCE_FILE = Path("/Users/laasyavenugopal/Desktop/Steam Datasets/games_march2025_with_success.csv")
 
 
@@ -31,8 +31,9 @@ def main() -> None:
     review_summary["success_rate_pct"] = (review_summary["success_rate"] * 100).round(2)
     review_summary.to_csv(BASE_DIR / "review_hypothesis_summary.csv", index=False)
 
-    price_bins = [-0.01, 0, 4.99, 9.99, 19.99, 29.99, 59.99, 9999]
-    price_labels = ["Free", "0.01-4.99", "5.00-9.99", "10.00-19.99", "20.00-29.99", "30.00-59.99", "60+"]
+    # Match the agreed tiers from the strategy report and feature-engineering plan.
+    price_bins = [-0.01, 0, 14.99, 49.99, 84.99, 9999]
+    price_labels = ["Free", "Budget (<$15)", "Mid ($15-$50)", "Premium ($50-$85)", "AAA ($85+)"]
     df["price_bin"] = pd.cut(df["price"], bins=price_bins, labels=price_labels)
 
     price_summary = (
