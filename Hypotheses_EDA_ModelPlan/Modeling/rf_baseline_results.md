@@ -1,0 +1,7 @@
+# Random Forest Baseline Results
+
+The baseline model used `RandomForestClassifier` with `n_estimators=300`, `max_depth=None`, `class_weight='balanced'`, and `random_state=42`. Evaluation used stratified 5-fold cross-validation on the engineered dataset at `data/output/steam_features_engineered.csv`, with ID columns (`appid`, `name`) and any `eda_` prefixed columns removed before training. The final modeling matrix contained 89,618 rows and 72 usable features, with class balance of 75,001 unsuccessful games versus 14,617 successful games.
+
+Across folds, the baseline achieved ROC-AUC of 0.879 +/- 0.003, F1 of 0.434 +/- 0.008, precision of 0.712 +/- 0.010, recall of 0.312 +/- 0.009, and accuracy of 0.867 +/- 0.001. Because only about 16% of games are labeled successful, using `class_weight='balanced'` was important for keeping the model from collapsing into an almost-all-negative classifier. The resulting recall and F1 are more meaningful than raw accuracy alone for this project.
+
+The strongest impurity-based feature importance signals came from tag_count, publisher_historical_success, achievements, description_length, developer_historical_success. These are useful baseline signals, but they should still be interpreted cautiously because impurity importance can favor higher-cardinality or more frequently splitting variables. This run establishes the floor for later comparisons, while Optuna tuning and stronger boosted models can be evaluated afterward against the same cross-validation setup.

@@ -1,0 +1,31 @@
+{
+  "engineered_dataset": "/Users/laasyavenugopal/Desktop/Steam Datasets/data/output/steam_features_engineered.csv",
+  "rows": 89618,
+  "features": 72,
+  "class_balance": {
+    "0": 75001,
+    "1": 14617
+  },
+  "metrics_mean_std": {
+    "roc_auc": {
+      "mean": 0.879181,
+      "std": 0.00282
+    },
+    "f1": {
+      "mean": 0.433736,
+      "std": 0.008104
+    },
+    "precision": {
+      "mean": 0.711883,
+      "std": 0.009972
+    },
+    "recall": {
+      "mean": 0.311965,
+      "std": 0.008639
+    },
+    "accuracy": {
+      "mean": 0.86717,
+      "std": 0.00115
+    }
+  }
+}
