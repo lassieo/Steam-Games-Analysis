@@ -1,0 +1,75 @@
+{
+  "model": "MLPClassifier",
+  "params": {
+    "hidden_layer_sizes": "(128, 64)",
+    "activation": "relu",
+    "solver": "adam",
+    "alpha": 0.0001,
+    "batch_size": 256,
+    "learning_rate_init": 0.001,
+    "max_iter": 100,
+    "early_stopping": true,
+    "validation_fraction": 0.1,
+    "n_iter_no_change": 10,
+    "random_state": 42
+  },
+  "rows": 89618,
+  "features": 72,
+  "preprocessing": {
+    "log_transformed_cols": [
+      "price",
+      "required_age",
+      "achievements",
+      "language_count",
+      "audio_language_count",
+      "developer_historical_success",
+      "publisher_historical_success",
+      "developer_game_count",
+      "cat_co_op",
+      "cat_online_pvp",
+      "cat_partial_controller_support",
+      "cat_pvp",
+      "cat_steam_leaderboards",
+      "cat_steam_trading_cards",
+      "genre_design_&_illustration",
+      "genre_early_access",
+      "genre_free_to_play",
+      "genre_massively_multiplayer",
+      "genre_racing",
+      "genre_sports",
+      "genre_utilities",
+      "genre_violent",
+      "tag_colorful",
+      "tag_cute",
+      "tag_exploration",
+      "tag_first_person",
+      "tag_multiplayer",
+      "tag_pixel_graphics",
+      "tag_shooter",
+      "tag_story_rich"
+    ],
+    "n_capped_cols": 18
+  },
+  "metrics_mean_std": {
+    "roc_auc": {
+      "mean": 0.872418,
+      "std": 0.003245
+    },
+    "f1": {
+      "mean": 0.487937,
+      "std": 0.017365
+    },
+    "precision": {
+      "mean": 0.651373,
+      "std": 0.018507
+    },
+    "recall": {
+      "mean": 0.390914,
+      "std": 0.025276
+    },
+    "accuracy": {
+      "mean": 0.866377,
+      "std": 0.002462
+    }
+  }
+}

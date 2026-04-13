@@ -1,0 +1,7 @@
+# Tabular MLP Results
+
+The Tabular MLP used `MLPClassifier` with hidden layers of size (128, 64), ReLU activation, Adam optimizer, alpha=1e-4 L2 regularization, and early stopping based on a 10% validation split. Evaluation used the same stratified 5-fold cross-validation as the Random Forest baseline and the boosted models, with `random_state=42` and identical splits, so the metrics are directly comparable.
+
+Unlike tree-based models, the MLP requires careful preprocessing because it does arithmetic with raw feature values. Features with skewness greater than 2.0 were log-transformed using `np.log1p()` (30 features: price, required_age, achievements, language_count, audio_language_count, developer_historical_success, publisher_historical_success, developer_game_count, ... (30 total)). All non-binary numeric features were then capped at the 99th percentile to prevent gradient explosion from extreme outliers, and finally a `StandardScaler` was fit on the training fold and applied to the validation fold. This preprocessing was repeated independently for each fold to prevent any leakage from validation into the preprocessing decisions.
+
+Across folds, the MLP achieved ROC-AUC of 0.872 +/- 0.003, F1 of 0.488 +/- 0.017, precision of 0.651 +/- 0.019, recall of 0.391 +/- 0.025, and accuracy of 0.866 +/- 0.002. These results should be compared against the Random Forest baseline and the XGBoost/LightGBM results to see whether the additional model complexity actually translates into better performance on this tabular dataset.

@@ -1,0 +1,16 @@
+{
+  "model": "XGBClassifier",
+  "n_trials": 50,
+  "best_roc_auc": 0.8840889448716766,
+  "best_params": {
+    "n_estimators": 600,
+    "max_depth": 10,
+    "learning_rate": 0.013722315372926544,
+    "subsample": 0.7417033228523667,
+    "colsample_bytree": 0.6330518651571728,
+    "min_child_weight": 10,
+    "reg_alpha": 0.004293015645912328,
+    "reg_lambda": 7.933219499760244e-08,
+    "gamma": 8.275580538169897e-07
+  }
+}
