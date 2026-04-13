@@ -1,0 +1,434 @@
+{
+  "price": {
+    "min": 0.0,
+    "max": 200.0,
+    "mean": 7.276851860117388,
+    "median": 4.99
+  },
+  "is_free": {
+    "min": 0.0,
+    "max": 1.0,
+    "mean": 0.15800397241625566,
+    "median": 0.0
+  },
+  "price_tier": {
+    "min": 0.0,
+    "max": 4.0,
+    "mean": 1.3672476511415117,
+    "median": 1.0
+  },
+  "required_age": {
+    "min": -1.0,
+    "max": 21.0,
+    "mean": 0.18362382557075588,
+    "median": 0.0
+  },
+  "achievements": {
+    "min": 0.0,
+    "max": 9821.0,
+    "mean": 20.55233323662657,
+    "median": 5.0
+  },
+  "has_achievements": {
+    "min": 0.0,
+    "max": 1.0,
+    "mean": 0.5414983597045236,
+    "median": 1.0
+  },
+  "platform_count": {
+    "min": 1.0,
+    "max": 3.0,
+    "mean": 1.3351447253899886,
+    "median": 1.0
+  },
+  "language_count": {
+    "min": 0.0,
+    "max": 103.0,
+    "mean": 5.23928228704055,
+    "median": 1.0
+  },
+  "audio_language_count": {
+    "min": 0.0,
+    "max": 103.0,
+    "mean": 2.082996719409047,
+    "median": 0.0
+  },
+  "release_year": {
+    "min": 1997.0,
+    "max": 2025.0,
+    "mean": 2020.75859760316,
+    "median": 2021.0
+  },
+  "release_month": {
+    "min": 1.0,
+    "max": 12.0,
+    "mean": 6.571615077328215,
+    "median": 7.0
+  },
+  "release_day_of_week": {
+    "min": 0.0,
+    "max": 6.0,
+    "mean": 2.5160458836394475,
+    "median": 3.0
+  },
+  "release_quarter": {
+    "min": 1.0,
+    "max": 4.0,
+    "mean": 2.526121984422772,
+    "median": 3.0
+  },
+  "released_in_sale_month": {
+    "min": 0.0,
+    "max": 1.0,
+    "mean": 0.24781851860117388,
+    "median": 0.0
+  },
+  "description_length": {
+    "min": 0.0,
+    "max": 342.0,
+    "mean": 195.67641545225288,
+    "median": 207.0
+  },
+  "has_website": {
+    "min": 0.0,
+    "max": 1.0,
+    "mean": 0.45876944363855476,
+    "median": 0.0
+  },
+  "developer_historical_success": {
+    "min": 0.0,
+    "max": 1.0,
+    "mean": 0.1848383356905335,
+    "median": 0.1631033944073735
+  },
+  "publisher_historical_success": {
+    "min": 0.0,
+    "max": 1.0,
+    "mean": 0.19678379666967102,
+    "median": 0.1631033944073735
+  },
+  "developer_game_count": {
+    "min": 0.0,
+    "max": 220.0,
+    "mean": 3.3480327612756366,
+    "median": 0.0
+  },
+  "genre_count": {
+    "min": 0.0,
+    "max": 19.0,
+    "mean": 2.8791537414358723,
+    "median": 3.0
+  },
+  "has_genres": {
+    "min": 0.0,
+    "max": 1.0,
+    "mean": 0.9976344038028074,
+    "median": 1.0
+  },
+  "category_count": {
+    "min": 0.0,
+    "max": 23.0,
+    "mean": 4.197292954540383,
+    "median": 3.0
+  },
+  "has_categories": {
+    "min": 0.0,
+    "max": 1.0,
+    "mean": 0.9902251779776384,
+    "median": 1.0
+  },
+  "tag_count": {
+    "min": 0.0,
+    "max": 21.0,
+    "mean": 11.258753821776875,
+    "median": 12.0
+  },
+  "has_tags": {
+    "min": 0.0,
+    "max": 1.0,
+    "mean": 0.8117342498158852,
+    "median": 1.0
+  },
+  "cat_co_op": {
+    "min": 0.0,
+    "max": 1.0,
+    "mean": 0.09787096342252673,
+    "median": 0.0
+  },
+  "cat_family_sharing": {
+    "min": 0.0,
+    "max": 1.0,
+    "mean": 0.8371978843535897,
+    "median": 1.0
+  },
+  "cat_full_controller_support": {
+    "min": 0.0,
+    "max": 1.0,
+    "mean": 0.21798076279318887,
+    "median": 0.0
+  },
+  "cat_multi_player": {
+    "min": 0.0,
+    "max": 1.0,
+    "mean": 0.18260840456158361,
+    "median": 0.0
+  },
+  "cat_online_pvp": {
+    "min": 0.0,
+    "max": 1.0,
+    "mean": 0.08137874087794862,
+    "median": 0.0
+  },
+  "cat_partial_controller_support": {
+    "min": 0.0,
+    "max": 1.0,
+    "mean": 0.12670445669396774,
+    "median": 0.0
+  },
+  "cat_pvp": {
+    "min": 0.0,
+    "max": 1.0,
+    "mean": 0.11534513155839228,
+    "median": 0.0
+  },
+  "cat_single_player": {
+    "min": 0.0,
+    "max": 1.0,
+    "mean": 0.9417639313530763,
+    "median": 1.0
+  },
+  "cat_steam_achievements": {
+    "min": 0.0,
+    "max": 1.0,
+    "mean": 0.4780401258675712,
+    "median": 0.0
+  },
+  "cat_steam_cloud": {
+    "min": 0.0,
+    "max": 1.0,
+    "mean": 0.2535316565868464,
+    "median": 0.0
+  },
+  "cat_steam_leaderboards": {
+    "min": 0.0,
+    "max": 1.0,
+    "mean": 0.08475975808431342,
+    "median": 0.0
+  },
+  "cat_steam_trading_cards": {
+    "min": 0.0,
+    "max": 1.0,
+    "mean": 0.11639402798544936,
+    "median": 0.0
+  },
+  "genre_action": {
+    "min": 0.0,
+    "max": 1.0,
+    "mean": 0.41110044857059963,
+    "median": 0.0
+  },
+  "genre_adventure": {
+    "min": 0.0,
+    "max": 1.0,
+    "mean": 0.395590171617309,
+    "median": 0.0
+  },
+  "genre_casual": {
+    "min": 0.0,
+    "max": 1.0,
+    "mean": 0.43182173224129083,
+    "median": 0.0
+  },
+  "genre_design_&_illustration": {
+    "min": 0.0,
+    "max": 1.0,
+    "mean": 0.0055122854783637215,
+    "median": 0.0
+  },
+  "genre_early_access": {
+    "min": 0.0,
+    "max": 1.0,
+    "mean": 0.10168716106139392,
+    "median": 0.0
+  },
+  "genre_free_to_play": {
+    "min": 0.0,
+    "max": 1.0,
+    "mean": 0.09894217679484033,
+    "median": 0.0
+  },
+  "genre_indie": {
+    "min": 0.0,
+    "max": 1.0,
+    "mean": 0.7050927269075409,
+    "median": 1.0
+  },
+  "genre_massively_multiplayer": {
+    "min": 0.0,
+    "max": 1.0,
+    "mean": 0.023689437389810084,
+    "median": 0.0
+  },
+  "genre_racing": {
+    "min": 0.0,
+    "max": 1.0,
+    "mean": 0.03683411814590819,
+    "median": 0.0
+  },
+  "genre_rpg": {
+    "min": 0.0,
+    "max": 1.0,
+    "mean": 0.18235175969113349,
+    "median": 0.0
+  },
+  "genre_simulation": {
+    "min": 0.0,
+    "max": 1.0,
+    "mean": 0.20721283670691157,
+    "median": 0.0
+  },
+  "genre_sports": {
+    "min": 0.0,
+    "max": 1.0,
+    "mean": 0.04395322368274231,
+    "median": 0.0
+  },
+  "genre_strategy": {
+    "min": 0.0,
+    "max": 1.0,
+    "mean": 0.19377803566247853,
+    "median": 0.0
+  },
+  "genre_utilities": {
+    "min": 0.0,
+    "max": 1.0,
+    "mean": 0.009551652569796246,
+    "median": 0.0
+  },
+  "genre_violent": {
+    "min": 0.0,
+    "max": 1.0,
+    "mean": 0.00478698475752639,
+    "median": 0.0
+  },
+  "tag_2d": {
+    "min": 0.0,
+    "max": 1.0,
+    "mean": 0.2532415362985115,
+    "median": 0.0
+  },
+  "tag_3d": {
+    "min": 0.0,
+    "max": 1.0,
+    "mean": 0.16681916579258632,
+    "median": 0.0
+  },
+  "tag_action": {
+    "min": 0.0,
+    "max": 1.0,
+    "mean": 0.36058604298243657,
+    "median": 0.0
+  },
+  "tag_adventure": {
+    "min": 0.0,
+    "max": 1.0,
+    "mean": 0.34336851971702115,
+    "median": 0.0
+  },
+  "tag_atmospheric": {
+    "min": 0.0,
+    "max": 1.0,
+    "mean": 0.15376375281751434,
+    "median": 0.0
+  },
+  "tag_casual": {
+    "min": 0.0,
+    "max": 1.0,
+    "mean": 0.35519650070298375,
+    "median": 0.0
+  },
+  "tag_colorful": {
+    "min": 0.0,
+    "max": 1.0,
+    "mean": 0.13203820661027918,
+    "median": 0.0
+  },
+  "tag_cute": {
+    "min": 0.0,
+    "max": 1.0,
+    "mean": 0.11835791916802428,
+    "median": 0.0
+  },
+  "tag_exploration": {
+    "min": 0.0,
+    "max": 1.0,
+    "mean": 0.1233345979602312,
+    "median": 0.0
+  },
+  "tag_first_person": {
+    "min": 0.0,
+    "max": 1.0,
+    "mean": 0.11653908812961682,
+    "median": 0.0
+  },
+  "tag_indie": {
+    "min": 0.0,
+    "max": 1.0,
+    "mean": 0.4843669798477984,
+    "median": 0.0
+  },
+  "tag_multiplayer": {
+    "min": 0.0,
+    "max": 1.0,
+    "mean": 0.09810529134772032,
+    "median": 0.0
+  },
+  "tag_pixel_graphics": {
+    "min": 0.0,
+    "max": 1.0,
+    "mean": 0.13183735410297037,
+    "median": 0.0
+  },
+  "tag_puzzle": {
+    "min": 0.0,
+    "max": 1.0,
+    "mean": 0.15535941440335646,
+    "median": 0.0
+  },
+  "tag_rpg": {
+    "min": 0.0,
+    "max": 1.0,
+    "mean": 0.15267022249994422,
+    "median": 0.0
+  },
+  "tag_shooter": {
+    "min": 0.0,
+    "max": 1.0,
+    "mean": 0.08766096096766275,
+    "median": 0.0
+  },
+  "tag_simulation": {
+    "min": 0.0,
+    "max": 1.0,
+    "mean": 0.17477515677654043,
+    "median": 0.0
+  },
+  "tag_singleplayer": {
+    "min": 0.0,
+    "max": 1.0,
+    "mean": 0.4767234260974358,
+    "median": 0.0
+  },
+  "tag_story_rich": {
+    "min": 0.0,
+    "max": 1.0,
+    "mean": 0.1260461068089,
+    "median": 0.0
+  },
+  "tag_strategy": {
+    "min": 0.0,
+    "max": 1.0,
+    "mean": 0.17256577919614363,
+    "median": 0.0
+  }
+}
