@@ -113,7 +113,7 @@ def engineer_features(df: pd.DataFrame) -> pd.DataFrame:
         print(f"    Capping {n_extreme} games with price > $200")
         df["price"] = df["price"].clip(upper=200)
     df["is_free"] = (df["price"] == 0).astype(int)
-    bins = [-0.01, 0, 4.99, 14.99, 29.99, np.inf]
+    bins = [-0.01, 0, 14.99, 49.99, 84.99, np.inf]
     df["price_tier"] = pd.cut(df["price"], bins=bins, labels=[0,1,2,3,4]).astype(float).fillna(0).astype(int)
 
     # Genres
@@ -586,7 +586,7 @@ def eda_success_breakdowns(df, charts_dir):
     fig, axes = plt.subplots(1, 3, figsize=(14, 4))
 
     # Price tier
-    tier_labels = {0:"Free", 1:"Budget\n(<$5)", 2:"Mid\n($5-15)", 3:"Premium\n($15-30)", 4:"AAA\n($30+)"}
+    tier_labels = {0:"Free", 1:"Budget\n(<$15)", 2:"Mid\n($15-50)", 3:"Premium\n($50-85)", 4:"AAA\n($85+)"}
     g1 = df.groupby("price_tier")["success"].agg(["mean","count"])
     axes[0].bar(range(len(g1)), g1["mean"], color=C_NEUTRAL, width=0.5)
     axes[0].set_xticks(range(len(g1)))

@@ -8,3 +8,7 @@ __pycache__/
 
 # OS files
 .DS_Store
+
+# Streamlit secrets 
+streamlit_app/.streamlit/secrets.toml
+.streamlit/secrets.toml
