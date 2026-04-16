@@ -8,13 +8,7 @@ Main entry point. Three tabs:
   3. Dashboard — interactive EDA and model performance
 
 Run locally:
-  streamlit run streamlit_app/app.py
-
-Deploy to Streamlit Community Cloud:
-  1. Push to GitHub
-  2. Go to share.streamlit.io
-  3. Point it at this file
-  4. Add GROQ_API_KEY in app settings → Secrets
+  streamlit run app.py
 """
 from __future__ import annotations
 
@@ -26,43 +20,145 @@ from dashboard import render_dashboard_tab
 from predictor import render_predictor_tab
 
 
+def inject_custom_css() -> None:
+    """Inject CSS for consistent branding across the app."""
+    st.markdown(
+        """
+        <style>
+        /* Hero section styling */
+        .hero-container {
+            background: linear-gradient(135deg, #1b2838 0%, #2a475e 100%);
+            padding: 2rem 2rem 1.5rem 2rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+        .hero-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+            color: #ffffff;
+        }
+        .hero-subtitle {
+            font-size: 1.05rem;
+            color: #c7d5e0;
+            margin-bottom: 1rem;
+        }
+        .hero-team {
+            font-size: 0.85rem;
+            color: #8f98a0;
+        }
+        .hero-stats {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255,255,255,0.15);
+        }
+        .hero-stat {
+            display: flex;
+            flex-direction: column;
+        }
+        .hero-stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #66c0f4;
+        }
+        .hero-stat-label {
+            font-size: 0.75rem;
+            color: #8f98a0;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Tab styling */
+        .stTabs [data-baseweb="tab-list"] {
+            gap: 8px;
+        }
+        .stTabs [data-baseweb="tab"] {
+            padding: 10px 20px;
+            font-weight: 500;
+        }
+
+        /* Section headers */
+        h2, h3 {
+            color: #1b2838;
+        }
+
+        /* Button styling */
+        .stButton>button[kind="primary"] {
+            background-color: #66c0f4;
+            color: #1b2838;
+            font-weight: 600;
+            border: none;
+        }
+        .stButton>button[kind="primary"]:hover {
+            background-color: #5aa0d0;
+            color: #1b2838;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+def render_hero(metadata: dict) -> None:
+    """Render the hero section at the top of the app."""
+    training_rows = metadata.get("n_training_rows", 89618)
+    n_features = metadata.get("n_features", 72)
+    roc = metadata.get("optuna_cv_roc_auc", 0.8841)
+
+    hero_html = f"""
+    <div class="hero-container">
+        <div class="hero-title">🎮 Steam Game Success Predictor</div>
+        <div class="hero-subtitle">
+            A data-driven ML analysis of {training_rows:,} Steam games, built to predict
+            commercial success from pre-launch features only.
+        </div>
+        <div class="hero-team">
+            Applied ML Project &middot; Laasya Venugopal &middot; Pujitha Attuluri &middot; Kanniese Chen
+        </div>
+        <div class="hero-stats">
+            <div class="hero-stat">
+                <div class="hero-stat-value">{training_rows:,}</div>
+                <div class="hero-stat-label">Games analyzed</div>
+            </div>
+            <div class="hero-stat">
+                <div class="hero-stat-value">{n_features}</div>
+                <div class="hero-stat-label">Features engineered</div>
+            </div>
+            <div class="hero-stat">
+                <div class="hero-stat-value">{roc:.4f}</div>
+                <div class="hero-stat-label">CV ROC-AUC</div>
+            </div>
+            <div class="hero-stat">
+                <div class="hero-stat-value">6</div>
+                <div class="hero-stat-label">Models compared</div>
+            </div>
+        </div>
+    </div>
+    """
+    st.markdown(hero_html, unsafe_allow_html=True)
+
+
 def main() -> None:
     st.set_page_config(
         page_title="Steam Game Success Predictor",
         page_icon="🎮",
         layout="wide",
-        initial_sidebar_state="collapsed",
+        initial_sidebar_state="expanded",
     )
 
-    # --- Header ---
-    st.title("Steam Game Success Predictor")
-    st.markdown(
-        "A data-driven ML project analyzing 89,618 Steam games to predict commercial "
-        "success from pre-launch features. Built for the Applied ML course at "
-        "Northeastern University by Laasya Venugopal, Pujitha Attuluri, and Kanniese Chen."
-    )
+    inject_custom_css()
 
     metadata = load_model_metadata()
-    if metadata:
-        info_col1, info_col2, info_col3 = st.columns(3)
-        info_col1.caption(
-            f"**Model:** {metadata.get('model_type', 'XGBoost')}"
-        )
-        info_col2.caption(
-            f"**Training rows:** {metadata.get('n_training_rows', 0):,}  "
-            f"**Features:** {metadata.get('n_features', 0)}"
-        )
-        roc = metadata.get('optuna_cv_roc_auc')
-        if roc:
-            info_col3.caption(f"**CV ROC-AUC:** {roc:.4f}")
-
-    st.markdown("---")
+    render_hero(metadata)
 
     # --- Tabs ---
     tab1, tab2, tab3 = st.tabs([
-        "Predictor",
-        "Ask the Data",
-        "Dashboard",
+        "🎯 Predictor",
+        "💬 Ask the Data",
+        "📊 Dashboard",
     ])
 
     with tab1:
@@ -78,6 +174,7 @@ def main() -> None:
     st.markdown("---")
     st.caption(
         "Based on the [Steam Games Dataset 2025](https://www.kaggle.com/datasets/artermiloff/steam-games-dataset). "
+        "Prediction model: tuned XGBoost. Best overall: stacking ensemble (ROC-AUC 0.8844). "
         "Source code: [Steam-Games-Analysis on GitHub](https://github.com/lassieo/Steam-Games-Analysis)"
     )
 

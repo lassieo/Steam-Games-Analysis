@@ -7,7 +7,7 @@ This is the complete model comparison across all five tiers of the model ladder.
 | Model | ROC-AUC | F1 | Precision | Recall | Accuracy |
 |---|---|---|---|---|---|
 | Stacking Ensemble | 0.8844 +/- 0.0025 | 0.5683 | 0.4436 | 0.7904 | 0.8041 |
-| XGBoost (tuned) | 0.8841 | — | — | — | — |
+| XGBoost (tuned) | 0.8841 +/- 0.0024 | 0.5756 | 0.4592 | 0.7712 | 0.8145 |
 | LightGBM | 0.8799 +/- 0.0029 | 0.5564 | 0.4250 | 0.8052 | 0.7906 |
 | Random Forest | 0.8792 +/- 0.0028 | 0.4337 | 0.7119 | 0.3120 | 0.8672 |
 | XGBoost | 0.8748 +/- 0.0027 | 0.5638 | 0.4474 | 0.7620 | 0.8077 |

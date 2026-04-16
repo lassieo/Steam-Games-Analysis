@@ -3,7 +3,7 @@ Random Forest Baseline
 =======================
 
 The first model in the ladder. Uses the engineered dataset from the EDA
-pipeline (no feature rebuilding) and the shared CV splits from
+pipeline and the shared CV splits from
 _modeling_utils.py to ensure all models compare fairly.
 
 Reads:  data/output/steam_features_engineered.csv

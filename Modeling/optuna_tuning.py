@@ -142,19 +142,66 @@ def plot_param_importance_chart(study: optuna.Study, output_path: Path) -> None:
         print(f"  Skipping param importance plot: {exc}")
 
 
+
+def evaluate_best_params_full_metrics(study: optuna.Study, X: pd.DataFrame, y: pd.Series, scale_pos_weight: float) -> dict:
+    """
+    Re-run 5-fold CV with the best params and compute all metrics
+    (Optuna only optimized ROC-AUC, so F1/precision/recall weren't tracked).
+    """
+    from sklearn.metrics import f1_score, precision_score, recall_score, accuracy_score
+
+    best_params = study.best_params
+    full_params = {
+        **best_params,
+        "scale_pos_weight": scale_pos_weight,
+        "random_state": RANDOM_STATE,
+        "eval_metric": "logloss",
+        "tree_method": "hist",
+        "n_jobs": -1,
+    }
+
+    cv = get_cv_splitter()
+    fold_metrics = {"roc_auc": [], "f1": [], "precision": [], "recall": [], "accuracy": []}
+
+    print("\n  Re-evaluating best params to compute full metrics ...")
+    for fold, (train_idx, val_idx) in enumerate(cv.split(X, y), start=1):
+        X_train, X_val = X.iloc[train_idx], X.iloc[val_idx]
+        y_train, y_val = y.iloc[train_idx], y.iloc[val_idx]
+
+        model = XGBClassifier(**full_params)
+        model.fit(X_train, y_train)
+        y_pred = model.predict(X_val)
+        y_prob = model.predict_proba(X_val)[:, 1]
+
+        fold_metrics["roc_auc"].append(roc_auc_score(y_val, y_prob))
+        fold_metrics["f1"].append(f1_score(y_val, y_pred, zero_division=0))
+        fold_metrics["precision"].append(precision_score(y_val, y_pred, zero_division=0))
+        fold_metrics["recall"].append(recall_score(y_val, y_pred, zero_division=0))
+        fold_metrics["accuracy"].append(accuracy_score(y_val, y_pred))
+        print(f"  Fold {fold}/5: ROC-AUC={fold_metrics['roc_auc'][-1]:.4f}, F1={fold_metrics['f1'][-1]:.4f}")
+
+    summary = {}
+    for metric, values in fold_metrics.items():
+        summary[f"{metric}_mean"] = float(np.mean(values))
+        summary[f"{metric}_std"] = float(np.std(values, ddof=1))
+
+    return summary
+
+
 # ---------------------------------------------------------------------------
 # Reporting
 # ---------------------------------------------------------------------------
-def write_results(study: optuna.Study, baseline_auc: float | None) -> None:
+def write_results(study: optuna.Study, baseline_auc: float | None, full_metrics: dict) -> None:
     best_params = study.best_params
     best_score = study.best_value
 
-    # Save best params as JSON for the stacking ensemble script to load
+    # Save best params + full metrics as JSON
     payload = {
         "model": "XGBClassifier",
         "n_trials": len(study.trials),
         "best_roc_auc": float(best_score),
         "best_params": best_params,
+        "full_metrics": full_metrics,  # NEW: F1, precision, recall, accuracy
     }
     (MODELING_DIR / "optuna_best_params.json").write_text(json.dumps(payload, indent=2))
 
@@ -234,10 +281,15 @@ def main() -> None:
 
     study.optimize(objective, n_trials=N_TRIALS, callbacks=[callback], show_progress_bar=False)
 
-    print("\n[3/3] Saving results ...")
+    print("\n[3/3] Computing full metrics for the best params and saving results ...")
+    full_metrics = evaluate_best_params_full_metrics(study, X, y, scale_pos_weight)
     plot_optimization_history_chart(study, CHARTS_DIR / "optuna_optimization_history.png")
     plot_param_importance_chart(study, CHARTS_DIR / "optuna_param_importance.png")
-    write_results(study, baseline_auc)
+    write_results(study, baseline_auc, full_metrics)
+
+    print("\nFull metrics for tuned XGBoost:")
+    for metric in ["roc_auc", "f1", "precision", "recall", "accuracy"]:
+        print(f"  {metric:12s}: {full_metrics[f'{metric}_mean']:.4f} +/- {full_metrics[f'{metric}_std']:.4f}")
 
     print(f"\nBest ROC-AUC: {study.best_value:.4f}")
     print(f"Best params:")

@@ -14,7 +14,7 @@
   "price_tier": {
     "min": 0.0,
     "max": 4.0,
-    "mean": 1.3672476511415117,
+    "mean": 0.9548081858555201,
     "median": 1.0
   },
   "required_age": {

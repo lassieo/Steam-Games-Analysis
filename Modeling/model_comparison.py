@@ -100,17 +100,32 @@ def get_tuned_xgb_metrics() -> dict | None:
         print(f"  Missing: optuna_best_params.json (skipping)")
         return None
     payload = json.loads(path.read_text())
-    return {
-        "model": "XGBoost (tuned)",
-        "roc_auc_mean": payload["best_roc_auc"],
-        "roc_auc_std": 0.0,  # Optuna gives single best value
-        "f1_mean": np.nan,
-        "f1_std": np.nan,
-        "precision_mean": np.nan,
-        "recall_mean": np.nan,
-        "accuracy_mean": np.nan,
-    }
 
+    # Use full_metrics if available (from re-evaluation step), fall back to legacy format
+    full_metrics = payload.get("full_metrics")
+    if full_metrics:
+        return {
+            "model": "XGBoost (tuned)",
+            "roc_auc_mean": full_metrics["roc_auc_mean"],
+            "roc_auc_std": full_metrics["roc_auc_std"],
+            "f1_mean": full_metrics["f1_mean"],
+            "f1_std": full_metrics["f1_std"],
+            "precision_mean": full_metrics["precision_mean"],
+            "recall_mean": full_metrics["recall_mean"],
+            "accuracy_mean": full_metrics["accuracy_mean"],
+        }
+    else:
+        # Legacy format which only has best ROC-AUC
+        return {
+            "model": "XGBoost (tuned)",
+            "roc_auc_mean": payload["best_roc_auc"],
+            "roc_auc_std": 0.0,
+            "f1_mean": np.nan,
+            "f1_std": np.nan,
+            "precision_mean": np.nan,
+            "recall_mean": np.nan,
+            "accuracy_mean": np.nan,
+        }
 
 def get_mlp_metrics() -> dict | None:
     df = safe_read_csv(MODELING_DIR / "mlp_cv_metrics.csv")
